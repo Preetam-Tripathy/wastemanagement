@@ -49,96 +49,13 @@ var config = {
         }
     });
 
+var us=document.getElementById("user");
+// document.getElementById("create").addEventListener("click",cretef);
+// function cretef(){
+   
+//     window.open('createorder.html','_self');
 
-
-  
-    var user= firebase.auth().currentUser;
-    console.log(user);
-    var hjcordiref1= firebase.database().ref("marketplace/"+`${localStorage.uids}`);
-    
-    
-     hjcordiref1.on("child_added", function(data){
-       console.log(data.key);
-    
-    
-           var newVoke = data.val();
-           var time=newVoke.time;
-           if(!time)
-           time= new Date();
-           
-           if(newVoke.item_to_be_sold)
-            {
-            var html = "";
-            html +=`
-             <div id="${encodeURI(data.key)+'wrap'}" class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
-             <article class="entry">
-    
-               <div class="entry-img">
-                 <img src="images/e-waste-management.jpg" alt="" class="img-fluid">
-               </div>
-    
-               <h1 style="font-size:3em;" class="entry-title">
-                 ${newVoke.item_to_be_sold}
-               </h1>
-               <h1 class="entry-title">
-                  <span style="font-weight:500">Price:<span> Rs ***
-               </h1>
-    
-               <div class="entry-meta">
-                 <ul>
-                   <li class="d-flex align-items-center"><i class="icofont-user"></i>${newVoke.name}</li>
-                   <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><time>${newVoke.time}</time></a></li>
-                 </ul>
-               </div>
-    
-               <div class="entry-content">
-                  <p style="font-weight:600;">
-                   ${newVoke.description}
-                 </p>
-                 
-                 <center><button type="button" data-id="${i}" id="${data.key}" class="btn btn-danger"onclick="cancellation(this);">Cancel</button></center>
-               </div>
-    
-             </article><!-- End blog entry -->
-           </div>
-    `
-    
-              document.getElementById("classe2").innerHTML += html;
-            }
-           
-          });
-          
-
-     
-     function cancellation(self) {
-       var Id = self.getAttribute("id");
-    
-     
-       var pr=confirm("Are you sure you want to cancel?");
-       if(pr)
-       {
-        // delete message
-        var db= firebase.database().ref("marketplace/"+localStorage.uids).child(Id).remove();
-        window.location.href="customer.html";
-       }
-     }
-     function buy_item(self){
-      var dtitle = self.getAttribute("data-key-id");
-      var uid= self.getAttribute("data-uid-id");
-      var tgref=firebase.database().ref("marketplace/"+uid+"/"+dtitle);
-     var newref=firebase.database().ref("orders/"+uid);
-    
-     newref.orderByChild("title").equalTo(dtitle).on("child_added", function(data){
-               
-      tgref.set(data.val());
-     });
-    
-      
-      
-      window.location.href="payment.html";
-     } 
-
-     
+// }
 
 document.getElementById("log").addEventListener("click",logo);
 function logo(){

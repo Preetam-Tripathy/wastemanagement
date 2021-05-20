@@ -26,9 +26,7 @@ var config = {
           if(!time)
           time= new Date();
           var html = "";
-         html +=`
-        
-         <div class="col-lg-5 col-md-5 col-sm-10 overlay">
+         html +=`<div class="col-lg-6 col-md-6 col-sm-10 overlay">
           <div class="row">
             <div class="col-6">
               <div class="info" style="display: flex; justify-content: center;align-items: center;flex-direction: column;padding: 9px;">
@@ -73,7 +71,7 @@ var config = {
          
 <br>
      </div>
-   
+    
  
 `
      
@@ -82,76 +80,6 @@ var config = {
          });
          
      });
-
-
-     var i="";
-     var user= firebase.auth().currentUser;
-     console.log(user);
-     var hjcordiref1= firebase.database().ref("marketplace/");
-     
-     
-      hjcordiref1.on("child_added", function(data){
-        console.log(data.key);
-        i=data.key;
-           var pathe1= firebase.database().ref("marketplace/"+data.key)
-           pathe1.on("child_added",function(data){
-     
-     
-            var newVoke = data.val();
-            var time=newVoke.time;
-            if(!time)
-            time= new Date();
-            
-            if(newVoke.item_to_be_sold)
-             {
-             var html = "";
-             html +=`
-              <div id="${encodeURI(data.key)+'wrap'}" style="background-color:aliceblue;padding: 8px;" class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
-              <article class="entry">
-     
-                <div class="entry-img">
-                  <img src="images/e-waste-management.jpg" alt="" class="img-fluid">
-                </div>
-     
-                <h1 style="font-size:3em;" class="entry-title">
-                  ${newVoke.item_to_be_sold}
-                </h1>
-                <h1 class="entry-title">
-                   <span style="font-weight:500">Price:<span> Rs ***
-                </h1>
-     
-                <div class="entry-meta">
-                  <ul>
-                    <li class="d-flex align-items-center"><i class="icofont-user"></i>${newVoke.name}</li>
-                    <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><time>${newVoke.time}</time></a></li>
-                  </ul>
-                </div>
-     
-                <div class="entry-content">
-                   <p style="font-weight:600;">
-                    ${newVoke.description}
-                  </p>
-                  <center><p>Status :</p>
-                  <p style="padding: 4px;background-color:gold;">${newVoke.status}</p></center>
-                  <center><button type="button" data-id="${i}" id="${data.key}" class="btn btn-outline-success"onclick="confirmation(this,i);">Confirm delivery</button></center>
-                </div>
-     
-              </article><!-- End blog entry -->
-            </div>
-     `
-     
-               document.getElementById("classe2").innerHTML += html;
-             }
-            
-           });
-           
-       });
-       
-   
-   
-
-
-
      function expand(self){
       var Id = self.getAttribute("id");
       var fId=Id+"fd";
@@ -174,12 +102,20 @@ var config = {
       var pr=confirm("Are you sure the pickup is completed?");
       if(pr)
       {
-        var db= firebase.database().ref("marketplace/"+did+"/"+Id+"/"+"status").set("successful");
-          
-        window.location.href="confirm.html";
+        var db= firebase.database().ref("orders/"+did+"/"+Id+"/"+"status").set("successful");
+        alert("The pickup is now closed");  
+        window.location.href="admin.html";
       }
     }
      
+var us=document.getElementById("user");
+us.textContent=localStorage.getItem("emails");
+document.getElementById("join").addEventListener("click",joinf);
+function joinf(){
+    
+     window.open('marketplace.html','_self');
+
+}
 
 document.getElementById("log").addEventListener("click",logo);
 function logo(){

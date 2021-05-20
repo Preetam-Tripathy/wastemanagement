@@ -79,14 +79,17 @@ var userrole= firebase.database().ref("userdata/");
          </article><!-- End blog entry -->
        </div>
 `
-
+if(flag==1)
+{
+  document.getElementById(`${data.key}`).style.display="block";
+}
           document.getElementById("classe").innerHTML += html;
         }
        
       });
       
   });
-  
+ 
  function cancellation(self) {
    var Id = self.getAttribute("id");
    var did= self.getAttribute("data-id");
@@ -101,11 +104,11 @@ var userrole= firebase.database().ref("userdata/");
  function buy_item(self){
   var dtitle = self.getAttribute("data-key-id");
   var uid= self.getAttribute("data-uid-id");
-  var tgref=firebase.database().ref("marketplace/"+localStorage.uids+"/"+dtitle);
+  var tgref=firebase.database().ref("marketplace/"+uid+"/"+dtitle);
  var newref=firebase.database().ref("orders/"+uid);
 
  newref.orderByChild("title").equalTo(dtitle).on("child_added", function(data){
-  data.val().status="active";         
+           
   tgref.set(data.val());
  });
 

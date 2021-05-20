@@ -73,7 +73,7 @@ var userrole= firebase.database().ref("userdata/");
                Buy Now
              </span>
              </div>
-             <center><button style="display:none;" type="button" data-id="${i}" id="${data.key}" class="btn btn-danger"onclick="cancellation(this);">Delete</button></center>
+             <center><button type="button" data-id="${i}" id="${data.key}" class="btn btn-danger"onclick="cancellation(this);">Delete</button></center>
            </div>
 
          </article><!-- End blog entry -->
@@ -86,7 +86,7 @@ var userrole= firebase.database().ref("userdata/");
       });
       
   });
-  
+ 
  function cancellation(self) {
    var Id = self.getAttribute("id");
    var did= self.getAttribute("data-id");
@@ -96,16 +96,17 @@ var userrole= firebase.database().ref("userdata/");
    {
     // delete message
     var db= firebase.database().ref("orders/"+did).child(Id).remove();
+    window.location.href="marketadmin.html";
    }
  }
  function buy_item(self){
   var dtitle = self.getAttribute("data-key-id");
   var uid= self.getAttribute("data-uid-id");
-  var tgref=firebase.database().ref("marketplace/"+localStorage.uids+"/"+dtitle);
+  var tgref=firebase.database().ref("marketplace/"+uid+"/"+dtitle);
  var newref=firebase.database().ref("orders/"+uid);
 
  newref.orderByChild("title").equalTo(dtitle).on("child_added", function(data){
-  data.val().status="active";         
+           
   tgref.set(data.val());
  });
 
